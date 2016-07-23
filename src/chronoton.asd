@@ -19,12 +19,19 @@
   :depends-on (#:alexandria
                #:log4cl
                #:drakma
-               #:local-time)
+               #:local-time
+               #:cl-hue
+               #:cl-pushover)
   
   :components ((:file "packages")
                (:file "version")
 
                (:module "core"
                         :components ((:file "logger")))
+
+               (:module "services"
+                        :components ((:file "packages")
+                                     (:file "hue")
+                                     (:file "pushover")))
 
                (:file "main")))
