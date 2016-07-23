@@ -5,7 +5,7 @@
 
   :long-name "Chronoton - backend of a home automation system."
   :author "Jacek Złydach"
-  :version "0.0.1"
+  :version (:read-file-from "version.lisp" :at (1 2 2))
   :description "Backend of a home automation system with StarTrek-like interfaces."
 
   :license "MIT"
@@ -22,4 +22,9 @@
                #:local-time)
   
   :components ((:file "packages")
+               (:file "version")
+
+               (:module "core"
+                        :components ((:file "logger")))
+
                (:file "main")))
