@@ -1,0 +1,4 @@
+#+title: Chronoton
+#+startup: hidestars
+
+:).
