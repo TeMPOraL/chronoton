@@ -2,15 +2,15 @@
   (:use #:cl
         #:chronoton)
 
-  (:export #:load-configuration
-           #:save-configuration))
+  (:export #:initialize
+           #:deinitialize))
 
 (defpackage #:chrono/pushover
   (:use #:cl
         #:chronoton)
 
-  (:export #:load-configuration
-           #:save-configuration
+  (:export #:initialize
+           #:deinitialize
 
            #:send-info
            #:send-alert))

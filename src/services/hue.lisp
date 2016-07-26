@@ -8,16 +8,32 @@
 (defvar *bridge* nil "Hue Bridge instance.")
 (defvar *lights* nil "Cached list of Hue lights.")
 
+(defun initialize ()
+  (log:info "Initializing Hue service.")
+  (load-configuration)
+  (setup-bridge)
+  (fetch-lights)
+  ;; TODO blink the lights, just for fun.
+  )
+
+
+(defun deinitialize ()
+  (log:info "Deinitializing Hue service.")
+  (save-configuration))
+
 (defun load-configuration ()
+  (log:debug "No configuration to load.")
+  ;; TODO fetch lights / rooms defaults
   )
 
 (defun save-configuration ()
+  (log:debug "No configuration to save.")
+  ;; TODO fetch lights / rooms defaults
   )
 
-(defun initialize ()
-  (log:info "Initializing Hue connection to ~A." *bridge-endpoint*)
-  (setf *bridge* (cl-hue:make-bridge *bridge-endpoint* *username*))
-  (fetch-lights))
+(defun setup-bridge ()
+  (log:info "Setting up a Hue bridge at ~A." *bridge-endpoint*)
+  (setf *bridge* (cl-hue:make-bridge *bridge-endpoint* *username*)))
 
 (defun fetch-lights ()
   (setf *lights* (cl-hue:get-lights *bridge*))
