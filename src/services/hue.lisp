@@ -15,8 +15,9 @@
   )
 
 (defun initialize ()
-  (log:debug "Initializing Hue connection to ~A." *bridge-endpoint*)
-  (setf *bridge* (cl-hue:make-bridge *bridge-endpoint* *username*)))
+  (log:info "Initializing Hue connection to ~A." *bridge-endpoint*)
+  (setf *bridge* (cl-hue:make-bridge *bridge-endpoint* *username*))
+  (fetch-lights))
 
 (defun fetch-lights ()
   (setf *lights* (cl-hue:get-lights *bridge*))
@@ -24,11 +25,11 @@
 
 ;;; utility functions / playing around
 (defmethod light-on ((light cl-hue:light) &optional (transition-time *default-transition-time*))
-  (log:debug "Turning on light #~A (~A) over ~A ms." (cl-hue::light-number light) (cl-hue::light-name light) (* 100 transition-time))
+  (log:info "Turning on light #~A (~A) over ~A ms." (cl-hue::light-number light) (cl-hue::light-name light) (* 100 transition-time))
   (cl-hue:set-light-state-by-number *bridge* (cl-hue::light-number light) :on t :brightness 255 :transitiontime transition-time))
 
 (defmethod light-off ((light cl-hue:light) &optional (transition-time *default-transition-time*))
-  (log:debug "Turning off light #~A (~A) over ~A ms." (cl-hue::light-number light) (cl-hue::light-name light) (* 100 transition-time))
+  (log:info "Turning off light #~A (~A) over ~A ms." (cl-hue::light-number light) (cl-hue::light-name light) (* 100 transition-time))
   (cl-hue:set-light-state-by-number *bridge* (cl-hue::light-number light) :on nil :brightness 255 :transitiontime transition-time))
 
 (defun lights-all-off ()
