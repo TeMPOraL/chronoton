@@ -13,9 +13,7 @@
   (load-configuration)
   (setup-bridge)
   (fetch-lights)
-  ;; TODO blink the lights, just for fun.
-  )
-
+  (blink-all-lights))
 
 (defun deinitialize ()
   (log:info "Deinitializing Hue service.")
@@ -40,19 +38,29 @@
   (log:debug *lights*))
 
 ;;; utility functions / playing around
+;;; TODO make -all- functions utilize Group API instead
+
 (defmethod light-on ((light cl-hue:light) &optional (transition-time *default-transition-time*))
   (log:info "Turning on light #~A (~A) over ~A ms." (cl-hue::light-number light) (cl-hue::light-name light) (* 100 transition-time))
-  (cl-hue:set-light-state-by-number *bridge* (cl-hue::light-number light) :on t :brightness 255 :transitiontime transition-time))
+  (cl-hue:set-light-state-by-number *bridge* (cl-hue::light-number light) :on t :transitiontime transition-time))
 
+;;; FIXME this method is broken - somehow it sets the light brightness to 1. Probably transition time issue.
 (defmethod light-off ((light cl-hue:light) &optional (transition-time *default-transition-time*))
   (log:info "Turning off light #~A (~A) over ~A ms." (cl-hue::light-number light) (cl-hue::light-name light) (* 100 transition-time))
-  (cl-hue:set-light-state-by-number *bridge* (cl-hue::light-number light) :on nil :brightness 255 :transitiontime transition-time))
+  (cl-hue:set-light-state-by-number *bridge* (cl-hue::light-number light) :on nil :transitiontime transition-time))
 
 (defun lights-all-off ()
   (mapc #'light-off *lights*))
 
 (defun lights-all-on ()
   (mapc #'light-on *lights*))
+
+(defmethod blink-light ((light cl-hue:light))
+  (log:info "Blinking light #~A (~A)." (cl-hue::light-number light) (cl-hue::light-name light))
+  (cl-hue:set-light-state-by-number *bridge* (cl-hue::light-number light) :alert "select"))
+
+(defun blink-all-lights ()
+  (mapc #'blink-light *lights*))
 
 ;;; printer
 
