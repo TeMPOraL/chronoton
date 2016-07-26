@@ -34,4 +34,5 @@
                                      (:file "hue")
                                      (:file "pushover")))
 
+               (:file "local-config")
                (:file "main")))
