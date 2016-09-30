@@ -22,6 +22,7 @@
 (defun load-configuration ()
   (log:debug "No configuration to load.")
   ;; TODO fetch lights / rooms defaults
+  
   )
 
 (defun save-configuration ()

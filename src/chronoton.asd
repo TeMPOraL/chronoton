@@ -20,6 +20,7 @@
                #:log4cl
                #:drakma
                #:local-time
+               #:cl-async
                #:cl-hue
                #:cl-pushover)
   
@@ -27,7 +28,10 @@
                (:file "version")
 
                (:module "core"
-                        :components ((:file "logger")))
+                        :components ((:file "packages")
+                                     (:file "logger")
+                                     (:file "database")
+                                     (:file "configuration")))
 
                (:module "services"
                         :components ((:file "packages")

@@ -1,6 +1,7 @@
 (defpackage #:chrono/hue
   (:use #:cl
-        #:chronoton)
+        #:chronoton
+        #:chronoton/core)
 
   (:export #:initialize
            #:deinitialize))

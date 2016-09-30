@@ -1,7 +1,7 @@
 (in-package #:chronoton)
 
 (defun initialize-system ()
-  (configure-logger)
+  (chrono/core:configure-logger)
   (log:info "Initializing Chronoton System, version ~A." *version*)
   
   (chrono/hue:initialize)
@@ -20,6 +20,10 @@
   "The entry point to the whole system."
 
   (initialize-system)
+
+  (as:with-event-loop ()
+    ;; TODO
+    )
 
   ;; TODO here stuff gets done.
 

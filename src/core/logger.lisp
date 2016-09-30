@@ -1,4 +1,4 @@
-(in-package #:chronoton)
+(in-package #:chronoton/core)
 
 (define-constant +default-log-destination+ "system.log" :documentation "Default name / destination of the main log file." :test #'string=)
 (defparameter *logging-condition* nil)
