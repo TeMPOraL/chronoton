@@ -22,12 +22,12 @@
   (log:info "Goodbye."))
 
 (defun init-services ()
-  (chrono/hue:initialize)
-  (chrono/pushover:initialize))
+  (cs/hue:initialize)
+  (cs/pushover:initialize))
 
 (defun deinit-services ()
-  (chrono/pushover:deinitialize)
-  (chrono/hue:deinitialize))
+  (cs/pushover:deinitialize)
+  (cs/hue:deinitialize))
 
 (defun run ()
   "The entry point to the whole system."

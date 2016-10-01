@@ -1,4 +1,4 @@
-(in-package #:chrono/hue)
+(in-package #:chronoton/service/hue)
 
 (defparameter *bridge-endpoint* "" "Endpoint of the Hue Bridge.")
 (defparameter *username* "" "Hue API user to pass in API calls.")

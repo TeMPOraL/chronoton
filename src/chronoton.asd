@@ -37,7 +37,13 @@
                (:module "services"
                         :components ((:file "packages")
                                      (:file "hue")
-                                     (:file "pushover")))
+                                     (:file "pushover")
+                                     (:file "http-server")))
+
+               (:module "home"
+                        :components ((:file "packages")))
+               (:module "api"
+                        :components ((:file "packages")))
 
                (:file "local-config")
                (:file "main")))

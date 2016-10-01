@@ -1,4 +1,4 @@
-(in-package #:chrono/pushover)
+(in-package #:chronoton/service/pushover)
 
 (defparameter *api-token* "" "API token for Pushover service to use.")
 (defparameter *admin-user-token* "" "Pushover token of the user to send the messages to.")
