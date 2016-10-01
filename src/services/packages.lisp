@@ -8,6 +8,8 @@
   (:export #:initialize
            #:deinitialize
 
+           #:get-light-by-number
+
            #:start-heartbeat
            #:stop-heartbeat
            #:reset-heartbeat

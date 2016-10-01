@@ -29,16 +29,22 @@
   (cs/pushover:deinitialize)
   (cs/hue:deinitialize))
 
+(defun initialize-home-control ()
+  (ch/lights:start-system))
+
+(defun deinitialize-home-control ()
+  (ch/lights:stop-system))
+
 (defun setup-signal-handlers ()
   (as:signal-handler as:+sigint+
                      (lambda (signal)
                        (declare (ignore signal))
                        (as:clear-signal-handlers)
                        (log:info "Caught SIGINT.")
-                       ;; FIXME temporary
-                       (cs/hue:stop-heartbeat))
+                           (deinitialize-home-control))
                      :event-cb (lambda (error)
                                  (log:error "Error processing SIGINT." error))))
+
 
 (defun run ()
   "The entry point to the whole system."
@@ -47,11 +53,12 @@
 
   (as:with-event-loop ()
     (setup-signal-handlers)
+    (initialize-home-control)
     
     ;; TODO
 
     ;; FIXME temporary
-    (cs/hue:start-heartbeat))
+    )
 
   ;; TODO here stuff gets done.
 

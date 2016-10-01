@@ -39,10 +39,18 @@
 
 (defun fetch-lights ()
   (setf *lights* (cl-hue:get-lights *bridge*))
-  (log:debug *lights*))
+  (log:debu1 *lights*))
 
+
+
+(defun get-light-by-number (light-number)
+  "Get Hue light data from lights cache."
+  (find-if (lambda (light)
+             (= (parse-integer (cl-hue::light-number light)) light-number))
+           *lights*))
+
+
 ;;; utility functions / playing around
-;;; TODO make -all- functions utilize Group API instead
 
 (defmethod light-on ((light cl-hue:light) &optional (transition-time *default-transition-time*))
   (log:info "Turning on light #~A (~A) over ~A ms." (cl-hue::light-number light) (cl-hue::light-name light) (* 100 transition-time))
@@ -92,8 +100,7 @@
 
 (defun heartbeat ()
   (log:debug "Heartbeat...")
-  ;; TODO pull info from Hue server and update cache.
-  )
+  (fetch-lights))
 
 
 ;;; printer

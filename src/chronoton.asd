@@ -41,7 +41,8 @@
                                      (:file "http-server")))
 
                (:module "home"
-                        :components ((:file "packages")))
+                        :components ((:file "packages")
+                                     (:file "lights")))
                (:module "api"
                         :components ((:file "packages")))
 
