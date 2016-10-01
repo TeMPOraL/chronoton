@@ -42,7 +42,11 @@
 
                (:module "home"
                         :components ((:file "packages")
-                                     (:file "lights")))
+                                     (:module "lights"
+                                              :components ((:file "light")
+                                                           (:module "hue"
+                                                                    :components ((:file "hue-light")))
+                                                           (:file "lights")))))
                (:module "api"
                         :components ((:file "packages")))
 
