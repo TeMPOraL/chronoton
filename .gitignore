@@ -2,3 +2,4 @@
 *.log.*
 *.fasl
 src/local-config.lisp
+*.db

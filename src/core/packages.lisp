@@ -10,6 +10,11 @@
    #:with-logging-conditions
    
    ;; database.lisp
+   #:database/connect
+   #:database/disconnect
+   #:db/do-sql
+   #:db/do-sql-fetch-all
+   #:db/fetch-full-table-raw
    
    ;; configuration.lisp
    #:defvar-configurable

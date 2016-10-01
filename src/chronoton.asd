@@ -21,6 +21,7 @@
                #:drakma
                #:local-time
                #:cl-async
+               #:cl-dbi
                #:cl-hue
                #:cl-pushover)
   
