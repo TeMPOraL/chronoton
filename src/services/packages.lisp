@@ -6,7 +6,12 @@
         #:chronoton/core)
 
   (:export #:initialize
-           #:deinitialize))
+           #:deinitialize
+
+           #:start-heartbeat
+           #:stop-heartbeat
+           #:reset-heartbeat
+           #:heartbeat-running-p))
 
 (defpackage #:chronoton/service/pushover
   (:nicknames #:chrono/serv/pushover

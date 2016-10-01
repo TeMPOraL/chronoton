@@ -29,14 +29,29 @@
   (cs/pushover:deinitialize)
   (cs/hue:deinitialize))
 
+(defun setup-signal-handlers ()
+  (as:signal-handler as:+sigint+
+                     (lambda (signal)
+                       (declare (ignore signal))
+                       (as:clear-signal-handlers)
+                       (log:info "Caught SIGINT.")
+                       ;; FIXME temporary
+                       (cs/hue:stop-heartbeat))
+                     :event-cb (lambda (error)
+                                 (log:error "Error processing SIGINT." error))))
+
 (defun run ()
   "The entry point to the whole system."
 
   (initialize-system)
 
   (as:with-event-loop ()
+    (setup-signal-handlers)
+    
     ;; TODO
-    )
+
+    ;; FIXME temporary
+    (cs/hue:start-heartbeat))
 
   ;; TODO here stuff gets done.
 
