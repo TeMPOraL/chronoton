@@ -3,6 +3,15 @@
 (defvar *core-database-connection* nil)
 (defparameter *core-db-file* "core.db" "Name of the SQLite database used by the system.")
 
+(defparameter *core-db-schema*
+  '("CREATE TABLE IF NOT EXISTS configuration (
+    package_name TEXT NOT NULL,
+    variable_name TEXT NOT NULL,
+    value TEXT,
+    created_at TEXT,
+    updated_at TEXT,
+    PRIMARY KEY (package_name, variable_name))"))
+
 (defun database/connect (&optional (db-file *core-db-file*))
   "Connect to the core database."
   (unless *core-database-connection*
@@ -25,7 +34,17 @@
     results))
 
 (defun db/do-sql-fetch-all (query &rest params)
-  (dbi:fetch-all (apply #'do-sql query params)))
+  (dbi:fetch-all (apply #'db/do-sql query params)))
 
 (defun db/fetch-full-table-raw (table)
-  (do-sql-fetch-all (concatenate 'string "SELECT * FROM " table ";")))
+  (db/do-sql-fetch-all (concatenate 'string "SELECT * FROM " table ";"))) ;
+
+
+
+(defun ensure-database-structure ()
+  "Ensure all tables in the database exist."
+  ;; FIXME Make it do it from file instead of list of strings; hint - split by #\;.
+  (handler-case (mapc (curry #'dbi:do-sql *core-database-connection*)
+                      *core-db-schema*)
+    (error (e)
+      (log:error "Error executing schema." e))))
