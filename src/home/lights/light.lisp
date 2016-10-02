@@ -12,6 +12,8 @@
                  :accessor :control-mode)))
 
 
+;;; TODO Figure out a good transition time API.
+;;; Maybe a special variable and let clauses for calls?
 
 (defgeneric light-control-mode (light)
   (:documentation "Get the `LIGHT' control mode.

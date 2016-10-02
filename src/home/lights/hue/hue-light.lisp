@@ -8,6 +8,11 @@
               :initarg :hue-state
               :accessor :hue-state)))
 
+;;; FIXME Hue state needs to be refreshed!
+;;; Probably should add a callback to the heartbeat!
+;;; TODO Also need to figure out how to store hue-light instances so that their
+;;; references won't break during lifetime of the application!
+
 (defmethod light-state ((light hue-light))
   (cl-hue::light-on-p (hue-state light)))
 
