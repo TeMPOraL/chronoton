@@ -3,10 +3,10 @@
 (defclass hue-light (light)
   ((number :initform (error "Need to provide a valid Hue light number.")
            :initarg :number
-           :accessor :number)
+           :accessor light-number)
    (hue-state :initform nil
               :initarg :hue-state
-              :accessor :hue-state)))
+              :accessor hue-state)))
 
 ;;; FIXME Hue state needs to be refreshed!
 ;;; Probably should add a callback to the heartbeat!
@@ -25,7 +25,7 @@
 )
 
 (defmethod set-light-color-rgb ((light hue-light) r g b)
-  ;; TODO
+  ;; TODO5
 )
 
 (defmethod light-color-hsv ((light hue-light))
@@ -61,4 +61,4 @@
 
 (defmethod print-object ((light hue-light) stream)
   (print-unreadable-object (light stream :type t :identity t)
-    (format stream "#~A (~A)" (number light) (light-name light))))
+    (format stream "#~A (~A)" (light-number light) (light-name light))))

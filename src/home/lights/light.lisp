@@ -6,10 +6,10 @@
          :accessor name)
    (lockedp :initform nil
             :initarg :lockedp
-            :accessor :lockedp)
+            :accessor lockedp)
    (control-mode :initform :default
                  :initarg :control-mode
-                 :accessor :control-mode)))
+                 :accessor control-mode)))
 
 
 ;;; TODO Figure out a good transition time API.

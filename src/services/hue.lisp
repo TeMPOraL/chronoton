@@ -10,6 +10,7 @@
 
 (defvar *heartbeat-canceller* nil "Closure used to cancel heartbeat event.")
 (defvar *heartbeat-interval* 2.0 "Hue heartbeat interval in seconds.")
+(defvar *heartbeat-changeset-callback* nil "Callback for the heartbeat to report on changed lights.")
 
 (defun initialize ()
   (log:info "Initializing Hue service.")
@@ -76,11 +77,12 @@
 
 
 
-(defun start-heartbeat (&optional (interval *heartbeat-interval*))
+(defun start-heartbeat (&key (interval *heartbeat-interval*) (changeset-cb nil))
   (if (not *heartbeat-canceller*)
       (progn
           (log:info "Starting Hue heartbeat with interval = ~A second(s)." interval)
-          (setf *heartbeat-canceller* (as:interval 'heartbeat :time interval)))
+          (setf *heartbeat-canceller* (as:interval 'heartbeat :time interval))
+          (setf *heartbeat-changeset-callback* changeset-cb))
       (log:error "Hue heartbeat is already running.")))
 
 (defun stop-heartbeat ()
@@ -91,16 +93,23 @@
         (setf *heartbeat-canceller* nil))
       (log:error "Hue heartbeat is not running.")))
 
-(defun reset-heartbeat (&optional (interval *heartbeat-interval*))
+(defun reset-heartbeat (&key (interval *heartbeat-interval*) (changeset-cb nil changeset-cb-provided-p))
   (stop-heartbeat)
-  (start-heartbeat interval))
+  (start-heartbeat &key :interval interval (if changeset-cb-provided-p changeset-cb *heartbeat-changeset-callback*)))
 
 (defun heartbeat-running-p ()
   (not (null *heartbeat-canceller*)))
 
 (defun heartbeat ()
   (log:debug "Heartbeat...")
-  (fetch-lights))
+  (let ((last-light-state *lights*))
+    (fetch-lights)
+    (when *heartbeat-changeset-callback*
+      (funcall *heartbeat-changeset-callback* (compute-changeset *lights* last-light-state)))))
+
+(defun compute-changeset (current-state previous-state)
+  ;; TODO
+  current-state)
 
 
 ;;; printer
