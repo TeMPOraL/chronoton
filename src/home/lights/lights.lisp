@@ -13,7 +13,7 @@
 
 (defun hue-factory-settings-p (light)
   (and (light-state light)
-       (= (light-color-temperature light) 370)
+       (= (light-color-temperature light) 366)
        (= (light-brightness light) 254)))
 
 (defun hack-cl-hue-light-to-hue-light (light)
